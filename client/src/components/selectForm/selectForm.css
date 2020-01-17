@@ -1,0 +1,12 @@
+.drop {
+  overflow: visable;
+}
+.Select-menu {
+  position: fixed !important;
+}
+
+.css-26l3qy-menu {
+  overflow: visable;
+  background-color: blue;
+  z-index: 1000 !important;
+}

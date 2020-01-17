@@ -64,6 +64,7 @@ UserSchema.methods.infoToSend = function() {
   return {
     name: `${this.firstName} ${this.lastName}`,
     userRole: this.userRole,
+    positionNumber: this.positionNumber,
     uvid: this.uvid,
     _id: this._id
   };

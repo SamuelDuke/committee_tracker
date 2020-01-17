@@ -33,7 +33,8 @@ exports.getSearchUsers = (req, res, next) => {
         return user.infoToSend();
       });
 
-      return res.json(_.mapKeys(usersToSend, "_id"));
+      // return res.json(_.mapKeys(usersToSend, "_id"));
+      return res.json(usersToSend);
     })
     .catch(err => {
       console.log(err);
