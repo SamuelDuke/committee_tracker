@@ -16,6 +16,14 @@ exports.getAllUsers = (req, res, next) => {
     });
 };
 
+exports.getAllSponsors = (req, res, next) => {
+  User.find({ userRole: 1 })
+    .exec()
+    .then(sponsors => {
+      return res.json(sponsors.map(sponsor => sponsor.infoToSend()));
+    });
+};
+
 exports.getSearchUsers = (req, res, next) => {
   const { searchTerm } = req.params;
 

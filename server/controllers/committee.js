@@ -1,7 +1,9 @@
+const _ = require("lodash");
 const Committee = require("../data_models/committee");
 
-const User = require("../data_models/user");
-const GoverningBody = require("../data_models/governingBody");
+const arrayToObject = (array, key) => {
+  return _.mapKeys(array, key);
+};
 
 exports.create = (req, res, next) => {
   const {
@@ -10,9 +12,9 @@ exports.create = (req, res, next) => {
     startDate,
     endDate,
     purpose,
-    sponser,
-    decisionMakeingAthority,
-    governingBody,
+    sponsor,
+    delegatedAuthority,
+    authorityBody,
     standing,
     assignments,
     members
@@ -20,56 +22,63 @@ exports.create = (req, res, next) => {
 
   const assignmentsToList = object => {
     const keys = Object.keys(object);
-
     return keys.map(key => {
       return object[key];
     });
   };
 
-  const membersToList = object => {
+  const obJectToList = (object, valueKey) => {
     const keys = Object.keys(object);
-
     return keys.map(key => {
-      return object[key]._id;
+      return { label: object[key].label, value: object[key].value[valueKey] };
+      // return object[key];
     });
   };
 
-  User.findOne({ uvid: chair })
-    .exec()
-    .then(chairId => {
-      Committee({
-        title,
-        chair,
-        startDate,
-        endDate,
-        purpose,
-        sponser,
-        decisionMakeingAthority,
-        governingBody,
-        standing,
-        assignments: assignmentsToList(assignments),
-        members: membersToList(members)
-      })
-        .save()
-        .then(charter => {
-          return res.json(charter);
-        })
-        .catch(err => {
-          console.error(err);
-          return res.json({ msg: "There was an error", error: err });
-        });
+  const newChair = { label: chair.label, value: chair.value.positionNumber };
+
+  Committee({
+    title,
+    chair: newChair,
+    startDate,
+    endDate,
+    purpose,
+    sponsor,
+    delegatedAuthority,
+    authorityBody,
+    standing,
+    assignments: assignmentsToList(assignments),
+    members: obJectToList(members, "positionNumber")
+  })
+    .save()
+    .then(committee => {
+      return res.json(committee);
     })
-    .catch(err => {
-      console.log(err);
-    });
+    .catch(err => console.log(err));
 };
 
+// exports.getMyCommittees = (req, res, next) => {
+//   Committee.find({ "chair.value": req.user.positionNumber })
+//     .exec()
+//     .then(myCommittees => {
+//       const newCommittees = myCommittees.map(committee => {
+//         return {
+//           ...committee,
+//           ["members"]: arrayToObject(committee.members, "_id")
+//         };
+//       });
+//       return res.json(newCommittees);
+//       // return res.json(arrayToObject(myCommittees, "_id"));
+//     })
+//     .catch(err => console.log(err));
+// };
+
 exports.getMyCommittees = (req, res, next) => {
-  Committee.find({ chair: req.user._id })
-    .populate("chair", "firstName lastName")
+  Committee.find({ "chair.value": req.user.positionNumber })
     .exec()
     .then(myCommittees => {
       return res.json(myCommittees);
+      // return res.json(arrayToObject(myCommittees, "_id"));
     })
     .catch(err => console.log(err));
 };
@@ -85,7 +94,6 @@ exports.getApprovalNeededCommittees = (req, res, next) => {
 
 exports.getAllCommittee = (req, res, next) => {
   Committee.find()
-    .populate("chair", "firstName lastName")
     .then(charters => {
       return res.json(charters);
     })

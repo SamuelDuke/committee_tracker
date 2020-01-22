@@ -1,6 +1,6 @@
 import React from "react";
 
-import CommitteeCard from "./CommitteeCard";
+import CommitteeCard from "../committeeCard";
 
 const CommitteeCardList = props => {
   const { committees } = props;

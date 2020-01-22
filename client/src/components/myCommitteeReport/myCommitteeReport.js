@@ -1,7 +1,15 @@
 import React from "react";
 
-const AllCommitteesPage = props => {
-  return <div>Hello I am your committee report.</div>;
+import CommitteeListPage from "../shared/committeeListPage";
+
+const MyCommitteesPage = props => {
+  return (
+    <CommitteeListPage
+      heading="All Committies"
+      url="/committees/me"
+      auth={true}
+    />
+  );
 };
 
-export default AllCommitteesPage;
+export default MyCommitteesPage;

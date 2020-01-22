@@ -1,9 +1,9 @@
 import React from "react";
 
-import CommitteeList from "./CommitteeCardList";
+import CommitteeList from "./committeeList";
 import LoadingOrError from "../loadingError";
 
-import useApiGet from "../../hooks/useApiGet";
+import useApiGet from "../../../hooks/useApiGet";
 
 const CommitteeListPage = props => {
   const { heading, url, auth } = props;

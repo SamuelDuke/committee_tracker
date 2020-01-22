@@ -15,7 +15,7 @@ const getUserTypeAndId = () => {
       decodedToken.userRole < 3 &&
       decodedToken._id
     ) {
-      return { userRole: decodedToken.userRole, userId: decodedToken._id };
+      return { userRole: decodedToken.userRole, userId: decodedToken._id , userPositionNumber: decodedToken.positionNumber};
     }
 
     localStorage.removeItem(tokenKey);
@@ -30,6 +30,7 @@ class Auth {
     this.authenticated = localStorage.getItem(tokenKey) ? true : false;
     this.userType = getUserTypeAndId().userType;
     this.userId = getUserTypeAndId().userId;
+    this.userPositionNumber = getUserTypeAndId().userPositionNumber;
   }
 
   login(token, cb) {

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Col from "react-bootstrap/Col";
-
+import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 
 import PageLayout from "../shared/pageLayout";
@@ -19,7 +19,7 @@ import AssignmentInput from "./assignmentInput";
 import { defaultAssignment } from "./assignmentInput/assignmentInput";
 
 import api, { authHeader } from "../../apis/backend";
-import useDynamicFormValues from "../../hooks/useDynamicFormValues";
+import useDynamicFormValues from "../../hooks/useDynamicFormValuesArray";
 
 import "./selectForm.css";
 
@@ -33,7 +33,7 @@ const defaultFormState = {
   purpose: "",
   delegatedAuthority: "",
   standing: false,
-  assignments: {},
+  assignments: [],
   members: {}
 };
 
@@ -181,7 +181,7 @@ const SelectForm = props => {
           label="Assignments"
           defaultSchema={defaultAssignment}
           state={formState}
-          stateValue="assignments"
+          stateKey="assignments"
           handleDynamicChange={handleDynamicChange}
           handleDynamicRemove={handleDynamicRemove}
           handleDynamicAdd={handleDynamicAdd}

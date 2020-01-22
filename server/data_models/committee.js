@@ -7,6 +7,11 @@ const AssignmentSchema = new Schema({
   dueDate: { type: Date }
 });
 
+const SelectSchema = new Schema({
+  value: { type: String },
+  label: { type: String }
+});
+
 const CommitteeSchema = new Schema({
   title: {
     type: String,
@@ -14,33 +19,29 @@ const CommitteeSchema = new Schema({
     required: [true, "You must submit a title."]
   },
   chair: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    type: SelectSchema,
     required: [true, "You must submit a chair."]
   },
   startDate: { type: Date, required: [true, "You must submit a start date."] },
   endDate: { type: Date },
   purpose: { type: String, required: [true, "You must submit a purpose."] },
-  decisionMakeingAthority: {
-    type: String,
+  authorityBody: {
+    type: SelectSchema,
     required: [
       true,
       "You must submit a the decison making athority of the committtee."
     ]
   },
-  sponser: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: [true, "You must submit a vpSponser."]
+  sponsor: {
+    type: SelectSchema,
+    required: [true, "You must submit a Sponser."]
   },
-  governingBody: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "GoverningBody",
-    required: [true, "You must submit a governing body."]
+  delegatedAuthority: {
+    type: String
   },
   standing: { type: Boolean, default: false },
   assignments: [AssignmentSchema],
-  members: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  members: [SelectSchema],
   sponserApproved: { type: Boolean, default: false }
 });
 

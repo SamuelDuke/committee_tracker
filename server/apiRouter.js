@@ -21,10 +21,12 @@ module.exports = app => {
   const apiRoutes = express.Router();
   const publicRoutes = express.Router();
   const userRoutes = express.Router();
+  const committeRoutes = express.Router();
 
   // Controllers
   const AuthController = require("./controllers/auth");
   const UserController = require("./controllers/user");
+  const CommitteeController = require("./controllers/committee");
 
   // Load data Routes
   // const loadDataRoutes = express.Router();
@@ -38,14 +40,26 @@ module.exports = app => {
 
   app.use("/auth", authRoutes);
 
+  // Public Routes
+  publicRoutes.get("/committees", CommitteeController.getAllCommittee);
+
   // Api Routes
 
   // User Routes
-  userRoutes.get("/:searchTerm", UserController.getSearchUsers);
+  userRoutes.get("/search/:searchTerm", UserController.getSearchUsers);
+  userRoutes.get("/sponsors", UserController.getAllSponsors);
   userRoutes.get("/", UserController.getAllUsers);
 
   apiRoutes.use("/users", userRoutes);
 
+  // Committee Routes
+  committeRoutes.post("/", CommitteeController.create);
+  committeRoutes.get("/", CommitteeController.getAllCommittee);
+  committeRoutes.get("/me", CommitteeController.getMyCommittees);
+
+  apiRoutes.use("/committees", committeRoutes);
+
+  app.use("/public", publicRoutes);
   app.use("/api", requireAuth, apiRoutes);
 
   // Handles any requests that don't match the ones above

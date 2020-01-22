@@ -7,6 +7,10 @@ const useDynamicFormValues = defaultState => {
     setState({ ...state, [stateKey]: e.target.value });
   };
 
+  // const handleDropdown = (stateKey, newState) => {
+  //   setState({ ...state, [stateKey]: newState });
+  // };
+
   const clearState = defaultState => {
     setState(defaultState);
   };
@@ -15,13 +19,10 @@ const useDynamicFormValues = defaultState => {
     const { id, name, value } = e.target;
     setState({
       ...state,
-      [stateKey]: {
-        ...state[stateKey],
-        [name]: {
-          ...state[stateKey][name],
-          [id]: value
-        }
-      }
+      [stateKey]: [
+        ...state[stateKey].slice(0, parseInt(id, 10)),
+        ...state[stateKey].slice(parseInt(id, 10) + 1, state[stateKey].length)
+      ]
     });
   };
 
@@ -54,21 +55,20 @@ const useDynamicFormValues = defaultState => {
     });
   };
 
-  const handleDynamicRemove = (a, name) => e => {
-    const removeProperty = prop => ({ [prop]: _, ...rest }) => rest;
-    const remove = removeProperty(name);
-    const newState = remove(state[a]);
-
-    setState({ ...state, [a]: newState });
+  const handleDynamicRemove = stateKey => e => {
+    const { id } = e.target;
+    const index = parseInt(id, 10);
+    setState([
+      ...state[stateKey].slice(0, index),
+      ...state[stateKey].slice(index + 1, state[stateKey].length)
+    ]);
   };
 
-  const handleDynamicAdd = (a, defaultObject) => e => {
+  const handleDynamicAdd = (stateKey, defaultObject) => e => {
+    console.log("Call to add Array was made");
     setState({
       ...state,
-      [a]: {
-        ...state[a],
-        [Date.now()]: defaultObject
-      }
+      [stateKey]: [...state[stateKey], defaultObject]
     });
   };
 

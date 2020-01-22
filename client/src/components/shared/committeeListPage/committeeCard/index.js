@@ -1,1 +1,1 @@
-export { default } from "./committeeListPage";
+export { default } from "./committeeCard";
