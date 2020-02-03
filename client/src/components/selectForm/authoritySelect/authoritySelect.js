@@ -3,9 +3,10 @@ import Select from "react-select";
 
 const authorityCommittiees = [
   { value: "boardOfTrustees", label: "Board of Trustees" },
-  { value: "universityCouncil", label: "University Council" },
+  { value: "presidentsCouncil", label: "President's Council" },
   { value: "facultySenate", label: "Faculty Senate" },
-  { value: "pace", label: "PACE" }
+  { value: "pace", label: "PACE" },
+  { value: "uvusa", label: "UVUSA" }
 ];
 
 const AuthoritySelect = props => {

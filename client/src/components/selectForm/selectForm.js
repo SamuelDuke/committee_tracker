@@ -23,7 +23,7 @@ import useDynamicFormValues from "../../hooks/useDynamicFormValues";
 
 import "./selectForm.css";
 
-const defaultFormState = {
+const defaultState = {
   title: "",
   chair: { lable: null, value: {} },
   sponsor: { lable: null, value: {} },
@@ -38,6 +38,9 @@ const defaultFormState = {
 };
 
 const SelectForm = props => {
+  const { edit } = props;
+  const defaultFormState = props.defaultFormState || defaultState;
+
   const [
     formState,
     handleChange,
@@ -53,15 +56,25 @@ const SelectForm = props => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    api
-      .post("/api/committees", formState, authHeader())
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-
+    if (edit) {
+      api
+        .put("/api/committees", formState, authHeader())
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } else {
+      api
+        .post("/api/committees", formState, authHeader())
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
     clearState(defaultFormState);
   };
 

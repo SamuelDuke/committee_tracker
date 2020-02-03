@@ -9,6 +9,7 @@ import Header from "./header";
 import AllCommitteePage from "../allCommitteesPage";
 import MyCommitteeReport from "../myCommitteeReport";
 import SelectForm from "../selectForm";
+import EditForm from "../editForm";
 import Login from "../loginPage";
 
 import "./app.css";
@@ -29,6 +30,7 @@ export default App => {
           />
           <ProtectedRoute path="/myCommittees" component={MyCommitteeReport} />
           <ProtectedRoute path="/newCommittee" component={SelectForm} />
+          <ProtectedRoute path="/editCommittee" component={EditForm} />
           {/* </AppLayout> */}
         </Router>
       </Container>
