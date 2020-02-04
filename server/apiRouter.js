@@ -41,6 +41,7 @@ module.exports = app => {
   app.use("/auth", authRoutes);
 
   // Public Routes
+  publicRoutes.get("/committees/:body", CommitteeController.getCommittee);
   publicRoutes.get("/committees", CommitteeController.getAllCommittee);
 
   // Api Routes
@@ -55,8 +56,9 @@ module.exports = app => {
   // Committee Routes
   committeRoutes.post("/", CommitteeController.create);
   committeRoutes.put("/", CommitteeController.edit);
-  committeRoutes.get("/", CommitteeController.getAllCommittee);
   committeRoutes.get("/me", CommitteeController.getMyCommittees);
+  committeRoutes.get("/all/:body", CommitteeController.getCommittee);
+  committeRoutes.get("/all", CommitteeController.getAllCommittee);
 
   apiRoutes.use("/committees", committeRoutes);
 

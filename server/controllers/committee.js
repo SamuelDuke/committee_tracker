@@ -142,6 +142,7 @@ exports.create = (req, res, next) => {
 // };
 
 exports.getMyCommittees = (req, res, next) => {
+  console.log({ user: req.user });
   Committee.find({ "chair.value": req.user.positionNumber })
     .exec()
     .then(myCommittees => {
@@ -162,6 +163,16 @@ exports.getApprovalNeededCommittees = (req, res, next) => {
 
 exports.getAllCommittee = (req, res, next) => {
   Committee.find()
+    .then(charters => {
+      return res.json(charters);
+    })
+    .catch(err => {
+      return res.json({ msg: "There was an error", error: err });
+    });
+};
+
+exports.getCommittee = (req, res, next) => {
+  Committee.find({ "authorityBody.value": req.params.body })
     .then(charters => {
       return res.json(charters);
     })

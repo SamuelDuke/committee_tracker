@@ -5,7 +5,7 @@ import CommitteeListPage from "../shared/committeeListPage";
 const MyCommitteesPage = props => {
   return (
     <CommitteeListPage
-      heading="All Committies"
+      heading="My Committies"
       url="/committees/me"
       auth={true}
     />
