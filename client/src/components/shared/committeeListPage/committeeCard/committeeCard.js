@@ -1,4 +1,7 @@
 import React from "react";
+import { Link, Redirect } from "react-router-dom";
+
+import Nav from "react-bootstrap/Nav";
 
 import "./committeeCard.css";
 
@@ -29,14 +32,12 @@ const CommitteeCard = props => {
       <header className="card-header">
         {title}
         {auth.userPositionNumber === chair.value ? (
-          <input
-            type="button"
-            className="card-edit-button"
-            value="Edit"
-            onClick={e => {
-              console.log("Edit was clicked!");
-            }}
-          />
+          <Link
+            className="card-edit"
+            to={{ pathname: "/editCommittee", state: props.committee }}
+          >
+            Edit Charter
+          </Link>
         ) : null}
       </header>
 

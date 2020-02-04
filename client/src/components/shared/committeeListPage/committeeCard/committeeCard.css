@@ -8,6 +8,7 @@
   word-wrap: break-word;
   overflow: hidden;
   line-height: 1.8em;
+  z-index: 10;
 }
 
 .card-condensed {
@@ -42,11 +43,10 @@
   flex: 5;
 }
 
-.card-edit-button {
-  font-size: small;
-  border-radius: 7px;
-  background-color: crimson;
-  width: 5%;
+.card-edit {
+  font-size: medium;
+  color: whitesmoke;
   float: right;
   font-weight: bold;
+  z-index: -1;
 }

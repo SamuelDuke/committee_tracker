@@ -54,6 +54,7 @@ module.exports = app => {
 
   // Committee Routes
   committeRoutes.post("/", CommitteeController.create);
+  committeRoutes.put("/", CommitteeController.edit);
   committeRoutes.get("/", CommitteeController.getAllCommittee);
   committeRoutes.get("/me", CommitteeController.getMyCommittees);
 

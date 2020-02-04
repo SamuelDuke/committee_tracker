@@ -39,7 +39,7 @@ const defaultState = {
 
 const SelectForm = props => {
   const { edit } = props;
-  const defaultFormState = props.defaultFormState || defaultState;
+  const defaultFormState = props.defaultState || defaultState;
 
   const [
     formState,
